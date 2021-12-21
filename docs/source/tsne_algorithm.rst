@@ -22,7 +22,7 @@ These conditional probabilities are then typically symmetrized to obtain joint p
 
     p_{ij} = \frac{p_{j\mid i} + p_{i \mid j}}{2}
 
-In the embedding space, we replace the Gaussian distribution with the Student's t-distribution is used, hence the name *t*-SNE. The t-distribution has fatter tails, allowing some distances to be less faithfully preserved in the embedding.
+In the embedding space, we replace the Gaussian distribution with the Student's t-distribution, hence the name *t*-SNE. The t-distribution has fatter tails, allowing some distances to be less faithfully preserved in the embedding.
 
 .. math::
 
@@ -40,7 +40,7 @@ We have now fully specified our model. We have two probability distributions des
 
     \frac{\partial C}{\partial \mathbf{y}_i} = 4 \sum_{j \neq i} \left ( p_{ij} - q_{ij} \right ) \left ( \mathbf{y}_i - \mathbf{y}_j \right ) \left ( 1 + || \mathbf{y}_i - \mathbf{y}_j || ^2 \right )^{-1}
 
-One last thing we have not yet mentioned how to set the bandwidths :math:`\sigma_i` for the Gaussian kernels centered over each data point in the input space. It is unlikely that one single value of :math:`\sigma_i` is optimal for all data points because the density of the data is likely to vary. In dense regions, a smaller value of :math:`\sigma_i` is usually more appropriate than in sparser regions. Perplexity is defined as
+One last thing we have not yet mentioned is how to set the bandwidths :math:`\sigma_i` for the Gaussian kernels centered over each data point in the input space. It is unlikely that one single value of :math:`\sigma_i` is optimal for all data points because the density of the data is likely to vary. In dense regions, a smaller value of :math:`\sigma_i` is usually more appropriate than in sparser regions. Perplexity is defined as
 
 .. math::
 
@@ -59,7 +59,7 @@ And that's it! You now know what t-SNE is and what it does.
 Accelerations
 -------------
 
-Unfortunately, a direct implementation of t-SNE is rather slow. It's easy to see that that computing all the :math:`p_{ij}` and :math:`q_{ij}` requires computing all pair-wise interactions between points and has time complexity :math:`\mathcal{O}(N^2)`. This quickly becomes far too slow for any reasonably sized data set. Moreover, the normalization constant for :math:`q_{ij}` must be computed in every single iteration of the optimization, while :math:`p_{ij}` can be computed only once, since the points in the input space stay fixed.
+Unfortunately, a direct implementation of t-SNE is rather slow. It's easy to see that computing all the :math:`p_{ij}` and :math:`q_{ij}` requires computing all pair-wise interactions between points and has time complexity :math:`\mathcal{O}(N^2)`. This quickly becomes far too slow for any reasonably sized data set. Moreover, the normalization constant for :math:`q_{ij}` must be computed in every single iteration of the optimization, while :math:`p_{ij}` can be computed only once, since the points in the input space stay fixed.
 
 Most of the subsequent research on t-SNE has focused on how to accelerate the computation of :math:`p_{ij}` and :math:`q_{ij}`.
 
